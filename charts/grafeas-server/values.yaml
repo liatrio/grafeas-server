@@ -1,10 +1,7 @@
 replicaCount: 1
 
-image:
-  repository: artifactory.toolchain.lead.prod.liatr.io/docker-registry/flywheel
-  name: grafeas-server
-  tag: v0.1.1 //TODO version this
-  pullPolicy: IfNotPresent
+image: artifactory.toolchain.lead.prod.liatr.io/docker-registry/flywheel/grafeas-server
+pullPolicy: IfNotPresent
 
 nameOverride: "grafeas-server"
 fullnameOverride: "grafeas-server"

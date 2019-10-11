@@ -6,10 +6,10 @@ pipeline {
     VERSION = version()
   }
   stages {
-    stage('Build & publish image') {
-      agent {
-        label "lead-toolchain-skaffold"
-      }   
+    agent {
+      label "lead-toolchain-skaffold"
+    }   
+    stage('Build & publish grafeas image') {
       steps {
         notifyPipelineStart()
         notifyStageStart()
@@ -33,8 +33,7 @@ pipeline {
 						container('skaffold') {
 								sh "make charts"
 								script {
-										def version = sh ( script: "make version", returnStdout: true).trim()
-										notifyStageEnd([status: "Published new grafeas server chart: ${version}"])
+										notifyStageEnd([status: "Published new grafeas-server chart: ${VERSION}"])
 								}
 						}
 				}
@@ -47,6 +46,6 @@ pipeline {
 	}
 }
 def version() {
-    return sh(script: "git describe --tags --dirty", returnStdout: true).trim()
+    return sh(script: "make version", returnStdout: true).trim()
 }
 

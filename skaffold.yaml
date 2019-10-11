@@ -4,4 +4,3 @@ build:
   artifacts:
   - image: grafeas-server
     context: .
-

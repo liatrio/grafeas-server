@@ -1,5 +1,7 @@
 HELM_REPOSITORY=https://artifactory.toolchain.lead.prod.liatr.io/artifactory/helm
 VERSION=$(shell git describe --tags --dirty | cut -c 2-)
+ARTIFACTORY_CREDS ?= $(shell cat /root/.docker/config.json | sed -n 's/.*auth.*"\(.*\)".*/\1/p'|base64 -d)
+
 
 export SKAFFOLD_DEFAULT_REPO?=artifactory.toolchain.lead.prod.liatr.io/docker-registry/liatrio-dev
                                                                                               
