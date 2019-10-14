@@ -25,23 +25,20 @@ pipeline {
       }   
     }   
 		stage('Chart') {
-				when {
-						branch 'master'
-				}
-				steps {
-						notifyStageStart()
-						container('skaffold') {
-								sh "make charts"
-								script {
-										notifyStageEnd([status: "Published new grafeas-server chart: ${VERSION}"])
-								}
-						}
-				}
-				post {
-						failure {
-								notifyStageEnd([result: "fail"])
-						}
-				}
+      steps {
+        notifyStageStart()
+        container('skaffold') {
+          sh "make charts"
+          script {
+            notifyStageEnd([status: "Published new grafeas-server chart: ${VERSION}"])
+          }
+        }
+      }
+      post {
+        failure {
+          notifyStageEnd([result: "fail"])
+        }
+      }
 		}
 	}
 }
