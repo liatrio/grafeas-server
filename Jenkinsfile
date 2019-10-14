@@ -45,6 +45,7 @@ pipeline {
   }
 }
 def version() {
+    sh(script: "git fetch --all --tags")
     return sh(script: "make version", returnStdout: true).trim()
 }
 
