@@ -12,8 +12,10 @@ pipeline {
         notifyStageStart()
         container('skaffold') {
           sh "make build"
+          script {
+            notifyStageEnd([status: "Published new grafeas image: ${version()}"])
+          }
         }   
-        notifyStageEnd([status: "Published new grafeas image: ${version()}"])
       }   
       post {
         failure {
