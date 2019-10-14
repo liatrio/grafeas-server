@@ -6,10 +6,10 @@ pipeline {
     VERSION = version()
   }
   stages {
-    agent {
-      label "lead-toolchain-skaffold"
-    }   
     stage('Build & publish grafeas image') {
+      agent {
+        label "lead-toolchain-skaffold"
+      }   
       steps {
         notifyPipelineStart()
         notifyStageStart()
@@ -25,6 +25,9 @@ pipeline {
       }   
     }   
     stage('Chart') {
+      agent {
+        label "lead-toolchain-skaffold"
+      }   
       steps {
         notifyStageStart()
         container('skaffold') {
