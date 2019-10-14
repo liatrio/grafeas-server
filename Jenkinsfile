@@ -24,7 +24,7 @@ pipeline {
         }   
       }   
     }   
-		stage('Chart') {
+    stage('Chart') {
       steps {
         notifyStageStart()
         container('skaffold') {
@@ -39,8 +39,8 @@ pipeline {
           notifyStageEnd([result: "fail"])
         }
       }
-		}
-	}
+    }
+  }
 }
 def version() {
     return sh(script: "make version", returnStdout: true).trim()
