@@ -22,16 +22,16 @@ charts:
 
 promote: version
 ifeq (false,$(IS_SNAPSHOT))
-  @echo "Unable to promote a non-snapshot"
-  @exit 1
+	@echo "Unable to promote a non-snapshot"
+	@exit 1
 endif
 ifneq ($(shell git status -s),)
-  @echo "Unable to promote a dirty workspace"
-  @exit 1
+	@echo "Unable to promote a dirty workspace" 
+	@exit 1
 endif
-  @git fetch --tags
-  @git tag -a -m "releasing v$(NEW_VERSION)" v$(NEW_VERSION)
-  @git push origin v$(NEW_VERSION)                                                                                                                                                                           
+	@git fetch --tags
+	@git tag -a -m "releasing v$(NEW_VERSION)" v$(NEW_VERSION)
+	@git push origin v$(NEW_VERSION)
 
 
 .PHONY: charts
