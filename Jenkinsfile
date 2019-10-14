@@ -2,9 +2,6 @@ library 'LEAD'
  
 pipeline {
   agent any 
-  environment {
-    VERSION = version()
-  }
   stages {
     stage('Build & publish grafeas image') {
       agent {
@@ -16,7 +13,7 @@ pipeline {
         container('skaffold') {
           sh "make build"
         }   
-        notifyStageEnd([status: "Published new grafeas image: ${VERSION}"])
+        notifyStageEnd([status: "Published new grafeas image: ${version()}"])
       }   
       post {
         failure {
@@ -33,7 +30,7 @@ pipeline {
         container('skaffold') {
           sh "make charts"
           script {
-            notifyStageEnd([status: "Published new grafeas-server chart: ${VERSION}"])
+            notifyStageEnd([status: "Published new grafeas-server chart: ${version()}"])
           }
         }
       }
