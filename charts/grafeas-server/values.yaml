@@ -1,6 +1,7 @@
 replicaCount: 1
 
-image: artifactory.toolchain.lead.prod.liatr.io/docker-registry/flywheel/grafeas-server
+image: "artifactory.toolchain.lead.prod.liatr.io/docker-registry/flywheel/grafeas-server"
+grafeas_version: "latest"
 pullPolicy: IfNotPresent
 
 nameOverride: "grafeas-server"
