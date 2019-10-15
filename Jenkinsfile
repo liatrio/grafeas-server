@@ -43,9 +43,6 @@ pipeline {
       }
     }
     stage('GitOps: Update sandbox') {
-      when {
-        branch 'master'
-      }   
       agent {
         label "lead-toolchain-gitops"
       }   
@@ -55,10 +52,17 @@ pipeline {
         GITOPS_VALUES = "inputs.grafeas_version=${version()}"
       }   
       steps {
+        notifyStageStart()
         container('gitops') {
           sh "/go/bin/gitops"
         }   
+        notifyStageEnd([status: "Updated the grafeas version in sandbox to: ${version()}"])
       }   
+      post {
+        failure {
+          notifyStageEnd([result: "fail"])
+        }
+      }
     }   
   }
 }
