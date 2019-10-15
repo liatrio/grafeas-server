@@ -42,6 +42,24 @@ pipeline {
         }
       }
     }
+    stage('GitOps: Update sandbox') {
+      when {
+        branch 'master'
+      }   
+      agent {
+        label "lead-toolchain-gitops"
+      }   
+      environment {
+        GITOPS_GIT_URL = 'https://github.com/liatrio/lead-environments.git'
+        GITOPS_REPO_FILE = 'aws/liatrio-sandbox/terragrunt.hcl'
+        GITOPS_VALUES = "inputs.grafeas_version=${version()}"
+      }   
+      steps {
+        container('gitops') {
+          sh "/go/bin/gitops"
+        }   
+      }   
+    }   
   }
 }
 def version() {
