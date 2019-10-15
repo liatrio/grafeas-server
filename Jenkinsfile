@@ -55,8 +55,10 @@ pipeline {
         notifyStageStart()
         container('gitops') {
           sh "/go/bin/gitops"
+          script {
+            notifyStageEnd([status: "Updated the grafeas version in sandbox to: ${version()}"])
+          }
         }   
-        notifyStageEnd([status: "Updated the grafeas version in sandbox to: ${version()}"])
       }   
       post {
         failure {
