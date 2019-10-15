@@ -18,6 +18,7 @@ charts:
 	@helm init --client-only
 	@helm lint charts/grafeas-server
 	@helm package --version $(VERSION) --app-version v$(VERSION) charts/grafeas-server
+	@echo "$(ARTIFACTORY_CREDS)"
 	@curl -f -X PUT -u $(ARTIFACTORY_CREDS) -T grafeas-server-$(VERSION).tgz $(HELM_REPOSITORY)/grafeas-server-$(VERSION).tgz
 
 promote: version
