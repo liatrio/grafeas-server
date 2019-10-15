@@ -10,6 +10,9 @@ pipeline {
       agent {
         label "lead-toolchain-skaffold"
       }   
+      when {
+        branch 'master'
+      }
       steps {
         notifyPipelineStart()
         notifyStageStart()
@@ -30,6 +33,9 @@ pipeline {
       agent {
         label "lead-toolchain-skaffold"
       }   
+      when {
+        branch 'master'
+      }
       steps {
         notifyStageStart()
         container('skaffold') {
@@ -49,6 +55,9 @@ pipeline {
       agent {
         label "lead-toolchain-gitops"
       }   
+      when {
+        branch 'master'
+      }
       environment {
         GITOPS_GIT_URL = 'https://github.com/liatrio/lead-environments.git'
         GITOPS_REPO_FILE = 'aws/liatrio-sandbox/terragrunt.hcl'
