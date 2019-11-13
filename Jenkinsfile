@@ -1,5 +1,3 @@
-library 'LEAD'
- 
 pipeline {
   agent any 
   environment {
@@ -14,18 +12,9 @@ pipeline {
         branch 'master'
       }
       steps {
-        notifyPipelineStart()
-        notifyStageStart()
         container('skaffold') {
           sh "make build"
-          script {
-            notifyStageEnd([status: "Published new grafeas image: ${VERSION}"])
-          }
-        }   
-      }   
-      post {
-        failure {
-          notifyStageEnd([result: "fail"])
+          stageMessage "Published new grafeas image: ${VERSION}"
         }   
       }   
     }   
@@ -37,17 +26,9 @@ pipeline {
         branch 'master'
       }
       steps {
-        notifyStageStart()
         container('skaffold') {
           sh "make charts"
-          script {
-            notifyStageEnd([status: "Published new grafeas-server chart: ${VERSION}"])
-          }
-        }
-      }
-      post {
-        failure {
-          notifyStageEnd([result: "fail"])
+          stageMessage "Published new grafeas-server chart: ${VERSION}"
         }
       }
     }
@@ -64,19 +45,11 @@ pipeline {
         GITOPS_VALUES = "inputs.grafeas_version=${VERSION}"
       }   
       steps {
-        notifyStageStart()
         container('gitops') {
           sh "/go/bin/gitops"
-          script {
-            notifyStageEnd([status: "Updated the grafeas version in sandbox to: ${VERSION}"])
-          }
+          stageMessage "Updated the grafeas version in sandbox to: ${VERSION}"
         }   
       }   
-      post {
-        failure {
-          notifyStageEnd([result: "fail"])
-        }
-      }
     }   
   }
 }
